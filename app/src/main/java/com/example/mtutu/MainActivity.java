@@ -3,7 +3,9 @@ package com.example.mtutu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -15,6 +17,10 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity {
     BarChart stackedBar;
@@ -82,6 +88,29 @@ public class MainActivity extends AppCompatActivity {
         stackedBar.getAxisRight().setDrawAxisLine(true);
 
 
+
+
+        List<AppModelSpendTime> students = new ArrayList<>();
+        students.add(new AppModelSpendTime("Jonh","hihi",11, "17"));
+        students.add(new AppModelSpendTime("Jonh","hihi",13, "17"));
+        students.add(new AppModelSpendTime("Jonh","hihi",12, "17"));
+
+        Collections.sort(students, new Comparator<AppModelSpendTime>() {
+            @Override
+            public int compare(AppModelSpendTime o1, AppModelSpendTime o2) {
+                return o1.getmPercentOfAll() - o2.getmPercentOfAll();
+            }
+        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            students.forEach(new Consumer<AppModelSpendTime>() {
+                @Override
+                public void accept(AppModelSpendTime e) {
+                    System.out.println(e);
+                }
+            });
+        }
+
+
     }
     private ArrayList<BarEntry> dataValue1() {
          ArrayList<BarEntry> list = new ArrayList<>();
@@ -91,4 +120,5 @@ public class MainActivity extends AppCompatActivity {
          list.add(new BarEntry(2,new float[] {2,5,2}));
          return list;
     }
+
 }
