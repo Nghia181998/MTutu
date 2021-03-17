@@ -1,124 +1,97 @@
 package com.example.mtutu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity {
     BarChart stackedBar;
     int[] color = new int[] {Color.RED,Color.GREEN,Color.BLUE};
-
+    UsageStatsManager usageStatsManager;
+    List<UsageStats> queryUsageStats;
+    RecyclerView recyclerView;
+    SpendTimeStatictisAdapter mSpendTimeAdapter;
+    List<AppModelSpendTime> mListAppSpendTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        stackedBar = findViewById(R.id.stacked_chartbar);
+        recyclerView = findViewById(R.id.recy);
+        mListAppSpendTime = new ArrayList<>();
+        mListAppSpendTime.add(new AppModelSpendTime(30,70,200));
+        mListAppSpendTime.add(new AppModelSpendTime(50,90,230));
+        mListAppSpendTime.add(new AppModelSpendTime(10,70,290));
+        mListAppSpendTime.add(new AppModelSpendTime(35,50,180));
+        mSpendTimeAdapter = new SpendTimeStatictisAdapter(mListAppSpendTime);
+        @SuppressLint("WrongConstant") LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayout.HORIZONTAL,false);
+        recyclerView.setAdapter(mSpendTimeAdapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
+    }
+    public static class SpendTimeStatictisAdapter extends RecyclerView.Adapter<SpendTimeStatictisAdapter.ItemAppHolder> {
 
-        BarDataSet barDataSet = new BarDataSet(dataValue1(),"bar_Set");
-        barDataSet.setColors(color);
-        BarData data = new BarData(barDataSet);
-        data.setDrawValues(false);
+        private List<AppModelSpendTime> mAppList;
 
-        final ArrayList<String> xAxisLabel = new ArrayList<>();
-        xAxisLabel.add("Mon");
-        xAxisLabel.add("Tue");
-        xAxisLabel.add("Wed");
+        public SpendTimeStatictisAdapter(List<AppModelSpendTime> noteList) {
+            mAppList = noteList;
+        }
 
-        stackedBar.setData(data);
+        @NonNull
+        @Override
+        public ItemAppHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new ItemAppHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.row_item_time_use_app, parent, false));
+        }
 
-        XAxis xAxis = stackedBar.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
-
-
-        stackedBar.setTouchEnabled(false);
-        stackedBar.setClickable(false);
-        stackedBar.setDoubleTapToZoomEnabled(false);
-        stackedBar.setDoubleTapToZoomEnabled(false);
-
-        // border cả khung
-        stackedBar.setDrawBorders(true);
-        // màu bg
-        stackedBar.setDrawGridBackground(true);
-        // mô tả label
-        stackedBar.getDescription().setEnabled(true);
-        // note màu
-        stackedBar.getLegend().setEnabled(true);
-
-        // hàng ngang bên trong
-
-        stackedBar.getAxisLeft().setDrawGridLines(true);
-        // giá trị thanh dọc Right
-        stackedBar.getAxisLeft().setDrawLabels(true);
-        // thanh dọc ngoài left  (Đậm hơn tẹo)
-        stackedBar.getAxisLeft().setDrawAxisLine(true);
-
-
-        // thanh dọc
-        stackedBar.getXAxis().setDrawGridLines(true);
-        // giá trị thanh dọc top
-        stackedBar.getXAxis().setDrawLabels(true);
-        // thanh ngang trên cùng
-        stackedBar.getXAxis().setDrawAxisLine(true);
-
-        // thanh ngang trong
-        stackedBar.getAxisRight().setDrawGridLines(true);
-        // giá trị thanh dọc Right
-        stackedBar.getAxisRight().setDrawLabels(true);
-        // thanh dọc ngoài right (Đậm hơn tẹo)
-        stackedBar.getAxisRight().setDrawAxisLine(true);
-
-
-
-
-        List<AppModelSpendTime> students = new ArrayList<>();
-        students.add(new AppModelSpendTime("Jonh","hihi",11, "17"));
-        students.add(new AppModelSpendTime("Jonh","hihi",13, "17"));
-        students.add(new AppModelSpendTime("Jonh","hihi",12, "17"));
-
-        Collections.sort(students, new Comparator<AppModelSpendTime>() {
-            @Override
-            public int compare(AppModelSpendTime o1, AppModelSpendTime o2) {
-                return o1.getmPercentOfAll() - o2.getmPercentOfAll();
-            }
-        });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            students.forEach(new Consumer<AppModelSpendTime>() {
-                @Override
-                public void accept(AppModelSpendTime e) {
-                    System.out.println(e);
-                }
-            });
+        @Override
+        public void onBindViewHolder(@NonNull ItemAppHolder holder, int position) {
+            holder.bindData(mAppList.get(position));
         }
 
 
-    }
-    private ArrayList<BarEntry> dataValue1() {
-         ArrayList<BarEntry> list = new ArrayList<>();
-         BarEntry barEntry1 = new BarEntry(0,new float[] {2,5.5f,2});
-         list.add(barEntry1);
-         list.add(new BarEntry(1,new float[] {3,8.5f,2}));
-         list.add(new BarEntry(2,new float[] {2,5,2}));
-         return list;
-    }
+        @Override
+        public int getItemCount() {
+            return mAppList != null ? mAppList.size() : 0;
+        }
 
+        class ItemAppHolder extends RecyclerView.ViewHolder {
+            private ProgressBar pb1,pb2,pb3;
+            private FrameLayout linearLayout;
+
+
+            @SuppressLint("CutPasteId")
+            public ItemAppHolder(View itemView) {
+                super(itemView);
+                pb1 = itemView.findViewById(R.id.progressBar);
+                pb2 = itemView.findViewById(R.id.progressBar1);
+                pb3 = itemView.findViewById(R.id.progressBar2);
+                linearLayout = itemView.findViewById(R.id.frame);
+            }
+
+            public void bindData(AppModelSpendTime appModelSpendTime) {
+                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(80,appModelSpendTime.mPercentOfAll));
+                linearLayout.setBackgroundColor(Color.WHITE);
+                pb2.setProgress(appModelSpendTime.mPercentMore);
+                pb3.setProgress(appModelSpendTime.mPercentSmall);
+
+            }
+        }
+    }
 }

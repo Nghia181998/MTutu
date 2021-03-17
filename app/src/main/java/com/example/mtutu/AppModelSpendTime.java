@@ -3,52 +3,43 @@ package com.example.mtutu;
 import java.util.Comparator;
 
 public class AppModelSpendTime implements Comparator<AppModelSpendTime> {
-    public String mPackageName;
-    public String mAppName;
+    public int mPercentSmall;
+    public int mPercentMore;
     public int mPercentOfAll;
-    public String mHourSpend;
 
-    public AppModelSpendTime() {
-    }
-
-    public AppModelSpendTime(String mPackageName, String mAppName, int mPercentOfAll, String mHourSpend) {
-        this.mPackageName = mPackageName;
-        this.mAppName = mAppName;
+    public AppModelSpendTime(int mPercentSmall, int mPercentMore, int mPercentOfAll) {
+        this.mPercentSmall = mPercentSmall;
+        this.mPercentMore = mPercentMore;
         this.mPercentOfAll = mPercentOfAll;
-        this.mHourSpend = mHourSpend;
     }
 
-    public String getmPackageName() {
-        return mPackageName;
+    public int getmPercentSmall() {
+        return mPercentSmall;
     }
 
-    public void setmPackageName(String PackageName) {
-        this.mPackageName = PackageName;
+    public void setmPercentSmall(int mPercentSmall) {
+        this.mPercentSmall = mPercentSmall;
     }
 
-    public String getmAppName() {
-        return mAppName;
+    public int getmPercentMore() {
+        return mPercentMore;
     }
 
-    public void setmAppName(String AppName) {
-        this.mAppName = AppName;
+    public void setmPercentMore(int mPercentMore) {
+        this.mPercentMore = mPercentMore;
     }
 
     public int getmPercentOfAll() {
         return mPercentOfAll;
     }
 
-    public void setmPercentOfAll(int PercentOfAll) {
-        this.mPercentOfAll = PercentOfAll;
+    public void setmPercentOfAll(int mPercentOfAll) {
+        this.mPercentOfAll = mPercentOfAll;
     }
 
-    public String getmHourSpend() {
-        return mHourSpend;
+    public AppModelSpendTime() {
     }
 
-    public void setmHourSpend(String HourSpend) {
-        this.mHourSpend = HourSpend;
-    }
 
     @Override
     public int compare(AppModelSpendTime o1, AppModelSpendTime o2) {

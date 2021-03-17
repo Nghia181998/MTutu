@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="#EDC709"
+    android:layout_width="80dp"
+    android:layout_margin="5dp"
+    android:layout_height="300dp"
+    android:gravity="bottom">
+
+    <FrameLayout
+        android:layout_width="20dp"
+        android:id="@+id/frame"
+        android:layout_height="200dp"
+        android:foregroundGravity="bottom"
+        android:layout_gravity="bottom"
+        android:background="#D57C12"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.mtutu.CustomProcessVertical
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:progress="100"
+            android:progressDrawable="@drawable/bb_process1"
+            android:layout_height="fill_parent" />
+
+        <com.example.mtutu.CustomProcessVertical
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:progress="50"
+            android:progressDrawable="@drawable/bb_process"
+            android:layout_height="fill_parent" />
+
+        <com.example.mtutu.CustomProcessVertical
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:progress="30"
+            android:progressDrawable="@drawable/bb_process2"
+            android:layout_height="fill_parent" />
+    </FrameLayout>
+
+</LinearLayout>
