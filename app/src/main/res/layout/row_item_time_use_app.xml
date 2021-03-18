@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:background="#EDC709"
-    android:layout_width="80dp"
-    android:layout_margin="5dp"
-    android:layout_height="300dp"
-    android:gravity="bottom">
+    android:orientation="vertical"
+    android:layout_width="60dp"
+    android:background="#FFFFFF"
+    android:layout_height="200dp"
+    android:gravity="center">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="175dp"
+        >
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/vetical_line"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="170dp"
+        android:orientation="vertical"
+        android:gravity="bottom">
 
     <FrameLayout
         android:layout_width="20dp"
         android:id="@+id/frame"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:foregroundGravity="bottom"
-        android:layout_gravity="bottom"
+        android:layout_gravity="center_horizontal"
         android:background="#D57C12"
         android:layout_margin="5dp"
         android:layout_marginBottom="20dp"
@@ -21,6 +36,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+
 
         <com.example.mtutu.CustomProcessVertical
             android:id="@+id/progressBar"
@@ -46,5 +63,19 @@
             android:progressDrawable="@drawable/bb_process2"
             android:layout_height="fill_parent" />
     </FrameLayout>
+
+    </LinearLayout>
+    </FrameLayout>
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="1dp"
+        android:src="@drawable/line"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginBottom="5dp"
+        android:text="Cột 1" />
 
 </LinearLayout>
